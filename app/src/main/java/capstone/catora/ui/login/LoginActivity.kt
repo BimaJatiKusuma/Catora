@@ -12,6 +12,7 @@ import capstone.catora.data.pref.UserModel
 import capstone.catora.databinding.ActivityLoginBinding
 import capstone.catora.ui.ViewModelFactory
 import capstone.catora.ui.main.MainActivity
+import capstone.catora.ui.main.TestActivity
 import capstone.catora.ui.register.RegisterActivity
 import capstone.catora.ui.register.RegisterViewModel
 
@@ -49,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
                             showLoading(true)
                         }
                         is ResultState.Success -> {
-                            val message = result.data.message
+                            val message = result.data.isExecuted
                             showSuccessDialog(message)
 
 
@@ -79,7 +80,7 @@ class LoginActivity : AppCompatActivity() {
                 "welcome to our app ${binding.textInput.text.toString()}"
             )
             setPositiveButton("continue") { _, _ ->
-                val intent = Intent(context, MainActivity::class.java)
+                val intent = Intent(context, TestActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
                 finish()
