@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import capstone.catora.data.CatoraRepository
 import capstone.catora.di.Injection
-import capstone.catora.ui.home.HomeViewModel
 import capstone.catora.ui.login.LoginViewModel
 import capstone.catora.ui.register.RegisterViewModel
 
@@ -13,9 +12,6 @@ class ViewModelFactory(private val repository: CatoraRepository) : ViewModelProv
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
-//            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
-//                HomeViewModel(repository) as T
-//            }
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(repository) as T
             }

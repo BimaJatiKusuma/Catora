@@ -1,5 +1,6 @@
 package capstone.catora.ui.register
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import capstone.catora.data.ResultState
 import capstone.catora.databinding.ActivityRegisterBinding
 import capstone.catora.ui.ViewModelFactory
+import capstone.catora.ui.main.MainActivity
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -68,6 +70,9 @@ class RegisterActivity : AppCompatActivity() {
                 "welcome to our app ${binding.tiUsername.text.toString()}"
             )
             setPositiveButton("continue") { _, _ ->
+                val intent = Intent(context, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
                 finish()
             }
             create()
