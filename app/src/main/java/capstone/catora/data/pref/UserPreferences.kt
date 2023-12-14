@@ -15,7 +15,6 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
     suspend fun saveSession(user: UserModel) {
         dataStore.edit { preferences ->
             preferences[EMAIL_KEY] = user.email
-            preferences[TOKEN_KEY] = user.token
             preferences[IS_LOGIN_KEY] = true
         }
     }
@@ -24,7 +23,6 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         return dataStore.data.map { preferences ->
             UserModel(
                 preferences[EMAIL_KEY] ?: "",
-                preferences[TOKEN_KEY] ?: "",
                 preferences[IS_LOGIN_KEY] ?: false
             )
         }

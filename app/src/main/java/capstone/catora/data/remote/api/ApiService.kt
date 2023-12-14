@@ -12,12 +12,12 @@ interface ApiService {
     suspend fun postRegister(
         @Field("username") username: String,
         @Field("password") password: String
-    ): PostRegisterResponse
+    ): Call<PostRegisterResponse>
 
     @FormUrlEncoded
     @POST("auth/login")
     suspend fun postLogin(
         @Field("username") username: String,
         @Field("password") password: String
-    ): PostRegisterResponse
+    ): Call<PostRegisterResponse>
 }
