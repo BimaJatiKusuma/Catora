@@ -4,14 +4,18 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import capstone.catora.data.CatoraRepository
+import capstone.catora.data.pref.UserPreferences
 import capstone.catora.data.remote.api.ApiConfig
 import capstone.catora.data.remote.api.response.AllArtworkResponseItem
 import capstone.catora.data.remote.api.response.GetUserByIdResponse
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ProfileViewModel : ViewModel() {
+class ProfileViewModel(private val repository: CatoraRepository) : ViewModel() {
     private val loading = MutableLiveData<Boolean>()
 
     private val _listArtwork = MutableLiveData<List<AllArtworkResponseItem>?>()
@@ -20,10 +24,10 @@ class ProfileViewModel : ViewModel() {
     private val _userId = MutableLiveData<GetUserByIdResponse>()
     val userId: LiveData<GetUserByIdResponse> = _userId
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
-    }
-    val text: LiveData<String> = _text
+//    private val _text = MutableLiveData<String>().apply {
+//        value = "This is notifications Fragment"
+//    }
+//    val text: LiveData<String> = _text
 
     fun getArtworkById(id: String) {
         showLoading(true)
@@ -79,6 +83,11 @@ class ProfileViewModel : ViewModel() {
         loading.value = isLoading
     }
 
+    fun logout(){
+        viewModelScope.launch {
+            repository.logout()
+        }
+    }
     companion object {
         private const val TAG = "ProfileFragment"
     }

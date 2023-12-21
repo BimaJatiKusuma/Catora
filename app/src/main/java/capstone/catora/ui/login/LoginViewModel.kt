@@ -38,7 +38,7 @@ class LoginViewModel(private val repository: CatoraRepository) : ViewModel(){
                     showLoading(false)
                     successCallback.postValue(Unit)
 
-                    saveSession(UserModel(response.userId.toString(), response.token))
+                    saveSession(UserModel(response.userId.toString(), response.token, true))
                 }
             } catch (e: HttpException){
                 val jsonInString = e.response()?.errorBody()?.string()

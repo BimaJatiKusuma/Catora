@@ -14,11 +14,6 @@ import capstone.catora.data.remote.api.response.AllArtworkResponseItem
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-
-//    private val list = ArrayList<ArtWorkProfile>()
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -50,6 +45,7 @@ class HomeFragment : Fragment() {
 
 
         binding.rvArtwork.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+
 
         homeViewModel.listArtwork.observe(viewLifecycleOwner) {
             if (it != null ){

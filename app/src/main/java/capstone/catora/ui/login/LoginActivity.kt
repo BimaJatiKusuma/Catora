@@ -7,6 +7,7 @@ import android.view.View
 import androidx.activity.viewModels
 import capstone.catora.databinding.ActivityLoginBinding
 import capstone.catora.ui.ViewModelFactory
+import capstone.catora.ui.WelcomeActivity
 import capstone.catora.ui.main.MainActivity
 import capstone.catora.ui.register.RegisterActivity
 import capstone.catora.ui.register.RegisterViewModel
@@ -37,7 +38,10 @@ class LoginActivity : AppCompatActivity() {
         }
 
         viewModel.successLiveData.observe(this){
-            startActivity(Intent(this, MainActivity::class.java))
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+//            startActivity(Intent(this, MainActivity::class.java))
         }
     }
 

@@ -11,10 +11,14 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavHostController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import capstone.catora.R
 import capstone.catora.data.remote.api.ApiConfig
 import capstone.catora.data.remote.api.response.PostUploadArtWorkResponse
 import capstone.catora.databinding.ActivityEditProfileBinding
+import capstone.catora.ui.main.MainActivity
 import capstone.catora.ui.main.profile.ProfileFragment
 import capstone.catora.ui.main.upload.UploadFragment
 import capstone.catora.ui.utils.reduceFileImage
@@ -88,10 +92,20 @@ class EditProfileActivity : AppCompatActivity() {
                 success
             )
             setPositiveButton("continue") { _, _ ->
-                val intent = Intent(this@EditProfileActivity, ProfileFragment::class.java)
+//                val intent = Intent(this@EditProfileActivity, MainActivity::class.java)
+//                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+//                startActivity(intent)
+//                finish()
+//                val navController = findNavController(R.id.nav_host_fragment_activity_main)
+//                navController.navigate(R.id.navigation_notifications)
+                val intent = Intent(this@EditProfileActivity, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
+//                MainActivity().navigateToProfileFragment()
                 finish()
+//                val navController = findNavController(R.id.nav_host_fragment_activity_main)
+//                navController.navigate(R.id.navigation_notifications)
+////                NavHostFragment.findNavController(this@EditProfileActivity).navigate(R.id.navigation_notifications)
             }
             create()
             show()
