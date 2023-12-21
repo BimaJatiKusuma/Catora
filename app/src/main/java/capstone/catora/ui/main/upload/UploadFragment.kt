@@ -17,13 +17,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import capstone.catora.R
+import capstone.catora.data.pref.UserPreferences
+import capstone.catora.data.pref.dataStore
 import capstone.catora.data.remote.api.ApiConfig
 import capstone.catora.data.remote.api.ApiConfigUploadArt
 import capstone.catora.data.remote.api.response.PostUploadArtWorkResponse
 import capstone.catora.databinding.FragmentUploadBinding
+import capstone.catora.ui.ViewModelFactory
 import capstone.catora.utils.uriToFile
 import com.google.gson.Gson
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -42,16 +47,22 @@ class UploadFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private lateinit var uploadViewModel: UploadViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val uploadViewModel =
-            ViewModelProvider(this).get(UploadViewModel::class.java)
-
         _binding = FragmentUploadBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        uploadViewModel = ViewModelProvider(this, ViewModelFactory.getInstance(requireContext())).get(UploadViewModel::class.java)
+
+        val pref = UserPreferences.getInstance(requireActivity().dataStore)
+        val user = runBlocking { pref.getSession().first() }
+        val userId = user.userId
+
 
 //        val textView: TextView = binding.textDashboard
 //        dashboardViewModel.text.observe(viewLifecycleOwner) {
@@ -74,7 +85,7 @@ class UploadFragment : Fragment() {
         binding.btnUpload.setOnClickListener {
             //Random.nextBoolean() just for giving dummy boolean, remove this when system has response from server
 //            uploadAction(Random.nextBoolean())
-            uploadArtwork()
+            uploadArtwork(userId)
         }
 
         return root
@@ -139,7 +150,7 @@ class UploadFragment : Fragment() {
         }
     }
 
-    private fun uploadArtwork() {
+    private fun uploadArtwork(userId: String) {
         showLoading(true)
         if (currentImageUri != null) {
 
@@ -154,7 +165,6 @@ class UploadFragment : Fragment() {
 //                    return
 //                }
 
-                val userId = "20"
                 val description = binding.edDescription.text.toString()
                 val tag = binding.edTag.text.toString()
                 val title = binding.edTitle.text.toString()

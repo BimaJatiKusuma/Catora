@@ -74,6 +74,7 @@ class ProfileFragment : Fragment() {
         profileViewModel.getArtworkById(userId)
         profileViewModel.listArtwork.observe(viewLifecycleOwner) {
             if (it != null ) {
+                binding.tvNoArtwork.visibility = View.GONE
                 setAllArtwork(it)
             }
         }
